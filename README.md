@@ -1,12 +1,26 @@
-# React + Vite
+# User Stories
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🐿️ As a user, I want the app to be fast and responsive so that I can browse without delays.
+🐿️ As a user, I want to read and add posts so that I can interact with the community.
+🐿️ As a user, I want a simple and intuitive form for creating new posts so that the process feels effortless.
+🐿️ As a user, I want to view multiple pages so that I can easily find the content I’m looking for.
+🐿️ As a developer, I want to build a database schema and seed the database with realistic data for accurate testing and development.
+🐿️ As a user, I want to be able to view all of the posts within the database so that I can explore all available content.
+🐿️ As a developer, I want to use .map() to display all posts to efficiently display fetched data.
+🐿️ As a developer, I want to poll my database to render any new data stored in
+there efficiently.
 
-Currently, two official plugins are available:
+# Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🎯 Create a client using React.
+🎯 Use Express to create your server, using both GET and POST endpoints.
+🎯 Build a React form for users to create posts.
+🎯 Create multiple pages using React Router.
+🎯 Design a database schema, and seed the database with some realistic data.
+🎯 Use SQL to retrieve posts from the database in your Express server.
+🎯 Display all posts using .map().
+🎯 Use an interval and useEffect() to poll your database.
 
-## Expanding the ESLint configuration
+# Reflection
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Resources
