@@ -155,14 +155,14 @@ app.post("/uncluttr/complete/:taskId", async (req, res) => {
 
 //STRETCH GOAL: Delete a task
 
-app.delete("/delete-uncluttr/:id", (req, res) => {
+app.delete("/delete-uncluttr/:id", async (req, res) => {
   try {
     const idParams = req.params.id;
-    const query = db.query(
+    const query = await db.query(
       `DELETE FROM uncluttrtasks WHERE id = $1 RETURNING*`,
       [idParams]
     );
-    res.status(200).json({ request: "success", deleted: query.rows });
+    res.status(200).json({ request: "success", deleted: query.rows[0] });
   } catch (error) {
     console.error(error, "Request failed. That task still needs uncluttering");
     res.status(500).json({ request: "fail" });
