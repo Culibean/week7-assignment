@@ -3,6 +3,7 @@ import Dashboard from "./components/Dashboard";
 import { Routes, Route } from "react-router";
 import TaskForm from "./components/TaskForm";
 import SingleTask from "./components/SingleTask";
+import Feed from "./components/Feed";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
           <Route element={<Dashboard />} path={"/dashboard"} />
           <Route element={<TaskForm />} path={"/new-unclutter"} />
           <Route element={<SingleTask />} path={"/task/:taskId"} />
+          <Route element={<Feed />} path={"/feed"} />
         </Routes>
       </main>
     </>

@@ -93,11 +93,28 @@ app.get("/your-uncluttr/user/:username", async (req, res) => {
 //==================================POST/GET ROUTE: Community Feed with completed tasks and celebrations================================
 
 //TODO: Create a GET route to show all completed tasks in the feed
+//TODO: add POST route to change task status to complete once button is pressed in Single Task component
+
+app.post("/your-uncluttr/:taskId/complete", async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+
+    const update = await db.query(
+      `UPDATE uncluttrtasks SET is_completed = TRUE, shared_to_community = TRUE, completed_at=NOW() WHERE id=1 RETURNING *;`,
+      [taskId]
+    );
+    console.log(query.rows);
+    res.status(200).json({ request: "success", task: update.rows[0] });
+  } catch (error) {
+    console.error(error, "Request failed. You need to Uncluttr first");
+    res.status(500).json({ request: "fail" });
+  }
+});
 
 app.get("/uncluttr-community", async (req, res) => {
   try {
     const query = await db.query(
-      `SELECT * FROM uncluttrtasks WHERE is_completed = TRUE AND shared_to_community = TRUE ORDER BY completed_at DESC;`
+      `SELECT uncluttrtasks.id, uncluttrtasks.task_text, uncluttrtasks.room, uncluttrtasks.celebration_count, uncluttrtasks.completed_at, uncluttrusers.username FROM uncluttrtasks JOIN uncluttrusers ON uncluttrtasks.user_id = uncluttrusers.id WHERE uncluttrtasks.is_completed = TRUE ORDER BY uncluttrtasks.completed_at DESC;`
     );
     console.log(query.rows);
     res.status(200).json({ request: "success", tasks: query.rows });
@@ -107,15 +124,19 @@ app.get("/uncluttr-community", async (req, res) => {
   }
 });
 
+//needs to be amended from original post route: everytime someone celebrates a completed task, the database needs to be updated
+
 app.post("/celebrate/:taskId", async (req, res) => {
   try {
     const taskId = req.params.taskId;
 
-    const query = await db.query(
-      `SELECT * FROM uncluttrtasks WHERE is_completed = TRUE AND shared_to_community = TRUE ORDER BY completed_at DESC;`
+    const update = await db.query(
+      `UPDATE uncluttrtasks SET celebration_count = celebration_count + 1 WHERE id=$1 RETURNING *`[
+        taskId
+      ]
     );
     console.log(query.rows);
-    res.status(200).json({ request: "success", tasks: query.rows });
+    res.status(200).json({ request: "success", tasks: update.rows[0] });
   } catch (error) {
     console.error(error, "Request failed. Uncluttr first, celebrate later");
     res.status(500).json({ request: "fail" });
