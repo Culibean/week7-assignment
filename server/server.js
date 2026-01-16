@@ -23,10 +23,12 @@ app.post("/new-uncluttr", async (req, res) => {
   try {
     const newUncluttr = req.body.formValues;
     console.log(newUncluttr);
+
+    //realised I don't have usernames in my task table, need to add JOIN
+
     const query = await db.query(
-      `INSERT INTO uncluttrtasks (user_id, task_text, room, task_type, time_available, scheduled_day, is_completed, completed_at, shared_to_community, celebration_count) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+      `INSERT INTO uncluttrtasks (user_id, task_text, room, task_type, time_available, scheduled_day, is_completed, completed_at, shared_to_community, celebration_count) SELECT uncluttrusers.id, $1, $2, $3, $4, $5, $6, $7, $8, $9 FROM uncluttrusers WHERE uncluttrusers.username = $10 RETURNING *`,
       [
-        newUncluttr.user_id,
         newUncluttr.task_text,
         newUncluttr.room,
         newUncluttr.task_type,
@@ -36,6 +38,7 @@ app.post("/new-uncluttr", async (req, res) => {
         null,
         true,
         0,
+        newUncluttr.username,
       ]
     );
     res.status(200).json({ request: "success" });
@@ -47,9 +50,24 @@ app.post("/new-uncluttr", async (req, res) => {
 
 //=====================================Personal Dashboard Tasks GET Route - DYNAMIC!!===============================================
 
-app.get("/your-uncluttr/user/:id", async (req, res) => {
+app.get("/your-uncluttr/user/:username", async (req, res) => {
   try {
-    const idParams = req.params.id;
+    const username = req.params.username;
+
+    const user = await db.query(
+      `SELECT id FROM uncluttrusers WHERE username = $1`,
+      [username]
+    );
+
+    if (user.rows.length === 0) {
+      return res.status(404).json({
+        request: "fail",
+        message: "No one with this name has uncluttred yet",
+      });
+    }
+
+    const idParams = user.rows[0].id;
+
     const openTasks = await db.query(
       `SELECT * FROM uncluttrtasks WHERE user_id = $1 AND is_completed = FALSE ORDER BY created_at DESC;`,
       [idParams]
