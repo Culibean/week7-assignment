@@ -47,15 +47,25 @@ app.post("/new-uncluttr", async (req, res) => {
 
 //=====================================Personal Dashboard Tasks GET Route - DYNAMIC!!===============================================
 
-app.get("/open-uncluttr/user/:id", async (req, res) => {
+app.get("/your-uncluttr/user/:id", async (req, res) => {
   try {
     const idParams = req.params.id;
-    const query = await db.query(
+    const openTasks = await db.query(
       `SELECT * FROM uncluttrtasks WHERE user_id = $1 AND is_completed = FALSE ORDER BY created_at DESC;`,
       [idParams]
     );
-    console.log(query.rows);
-    res.status(200).json({ request: "success", tasks: query.rows }); //error was thrown, as can't send two requests, combined both responses in success (query and rows)
+
+    const closedTasks = await db.query(
+      `SELECT * from uncluttrtasks WHERE user_id = $1 AND is_completed = TRUE ORDER BY completed_at DESC;`,
+      [idParams]
+    );
+    console.log(openTasks.rows);
+    console.log(closedTasks.rows);
+    res.status(200).json({
+      request: "success",
+      open: openTasks.rows,
+      closed: closedTasks.rows,
+    }); //error was thrown, as can't send two requests, combined both responses in success (query and rows)
   } catch (error) {
     console.error(error, "Request failed. Nothing to Uncluttr");
     res.status(500).json({ request: "fail" });
@@ -90,6 +100,71 @@ app.post("/celebrate/:taskId", async (req, res) => {
     res.status(200).json({ request: "success", tasks: query.rows });
   } catch (error) {
     console.error(error, "Request failed. Uncluttr first, celebrate later");
+    res.status(500).json({ request: "fail" });
+  }
+});
+
+//===================================GET Route for Task Generator===========================================
+
+app.get("/uncluttr-generator", async (req, res) => {
+  try {
+    const query = await db.query(
+      `SELECT * from uncluttrgenerator ORDER BY time_estimated ASC;`
+    );
+    console.log(query.rows);
+    res.status(200).json({ request: "success", tasks: query.rows });
+  } catch (error) {
+    console.error(error, "Request failed. No need to uncluttr today");
+    res.status(500).json({ request: "fail" });
+  }
+});
+
+//================================GET Route for Single Task page - DYNAMIC! ============================================
+
+app.get("/your-uncluttr/:taskId", async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+
+    const query = await db.query(`SELECT * FROM uncluttrtasks WHERE id=$1;`, [
+      taskId,
+    ]);
+    console.log(query.rows);
+    res.status(200).json({ request: "success", task: query.rows[0] }); //needed to return single task not an array
+  } catch (error) {
+    console.error(error, "Request failed. No Uncluttr task for you today");
+    res.status(500).json({ request: "fail" });
+  }
+});
+
+// =================================POST ROUTE once a task has been completed - DYNAMIC! ===========================================
+
+app.post("/uncluttr/complete/:taskId", async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const query = await db.query(
+      `UPDATE uncluttrtasks SET is_completed = TRUE, completed_at = NOW() WHERE id = $1 returning*;`,
+      [taskId]
+    );
+    console.log(query.rows);
+    res.status(200).json({ request: "success", task: query.rows[0] });
+  } catch (error) {
+    console.error(error, "Request failed. No Uncluttr task for you today");
+    res.status(500).json({ request: "fail" });
+  }
+});
+
+//STRETCH GOAL: Delete a task
+
+app.delete("/delete-uncluttr/:id", (req, res) => {
+  try {
+    const idParams = req.params.id;
+    const query = db.query(
+      `DELETE FROM uncluttrtasks WHERE id = $1 RETURNING*`,
+      [idParams]
+    );
+    res.status(200).json({ request: "success", deleted: query.rows });
+  } catch (error) {
+    console.error(error, "Request failed. That task still needs uncluttering");
     res.status(500).json({ request: "fail" });
   }
 });
