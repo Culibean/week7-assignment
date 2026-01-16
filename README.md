@@ -27,3 +27,8 @@ there efficiently.
 # Reflection
 
 # Resources
+
+Displaying time and dates for completed tasks:
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toLocaleString
