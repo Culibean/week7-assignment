@@ -11,6 +11,11 @@ export default function Feed() {
 
   useEffect(() => {
     fetchTasks();
+
+    //TODO: add polling
+
+    const pollingInterval = setInterval(fetchTasks, 5000);
+    return () => clearInterval(pollingInterval);
   }, []);
 
   const handleCelebration = async (taskId) => {

@@ -24,7 +24,7 @@ app.post("/new-uncluttr", async (req, res) => {
     const newUncluttr = req.body.formValues;
     console.log(newUncluttr);
 
-    //realised I don't have usernames in my task table, need to add JOIN
+    //realised I don't have usernames in my task table, need to pull usernames from username database
 
     const query = await db.query(
       `INSERT INTO uncluttrtasks (user_id, task_text, room, task_type, time_available, scheduled_day, is_completed, completed_at, shared_to_community, celebration_count) SELECT uncluttrusers.id, $1, $2, $3, $4, $5, $6, $7, $8, $9 FROM uncluttrusers WHERE uncluttrusers.username = $10 RETURNING *`,
@@ -39,7 +39,7 @@ app.post("/new-uncluttr", async (req, res) => {
         true,
         0,
         newUncluttr.username,
-      ]
+      ],
     );
     res.status(200).json({ request: "success" });
   } catch (error) {
@@ -56,7 +56,7 @@ app.get("/your-uncluttr/user/:username", async (req, res) => {
 
     const user = await db.query(
       `SELECT id FROM uncluttrusers WHERE username = $1`,
-      [username]
+      [username],
     );
 
     if (user.rows.length === 0) {
@@ -70,12 +70,12 @@ app.get("/your-uncluttr/user/:username", async (req, res) => {
 
     const openTasks = await db.query(
       `SELECT * FROM uncluttrtasks WHERE user_id = $1 AND is_completed = FALSE ORDER BY created_at DESC;`,
-      [idParams]
+      [idParams],
     );
 
     const closedTasks = await db.query(
       `SELECT * from uncluttrtasks WHERE user_id = $1 AND is_completed = TRUE ORDER BY completed_at DESC;`,
-      [idParams]
+      [idParams],
     );
     console.log(openTasks.rows);
     console.log(closedTasks.rows);
@@ -101,7 +101,7 @@ app.post("/your-uncluttr/:taskId/complete", async (req, res) => {
 
     const update = await db.query(
       `UPDATE uncluttrtasks SET is_completed = TRUE, shared_to_community = TRUE, completed_at=NOW() WHERE id=1 RETURNING *;`,
-      [taskId]
+      [taskId],
     );
     console.log(query.rows);
     res.status(200).json({ request: "success", task: update.rows[0] });
@@ -114,7 +114,7 @@ app.post("/your-uncluttr/:taskId/complete", async (req, res) => {
 app.get("/uncluttr-community", async (req, res) => {
   try {
     const query = await db.query(
-      `SELECT uncluttrtasks.id, uncluttrtasks.task_text, uncluttrtasks.room, uncluttrtasks.celebration_count, uncluttrtasks.completed_at, uncluttrusers.username FROM uncluttrtasks JOIN uncluttrusers ON uncluttrtasks.user_id = uncluttrusers.id WHERE uncluttrtasks.is_completed = TRUE ORDER BY uncluttrtasks.completed_at DESC;`
+      `SELECT uncluttrtasks.id, uncluttrtasks.task_text, uncluttrtasks.room, uncluttrtasks.celebration_count, uncluttrtasks.completed_at, uncluttrusers.username FROM uncluttrtasks JOIN uncluttrusers ON uncluttrtasks.user_id = uncluttrusers.id WHERE uncluttrtasks.is_completed = TRUE ORDER BY uncluttrtasks.completed_at DESC;`,
     );
     console.log(query.rows);
     res.status(200).json({ request: "success", tasks: query.rows });
@@ -133,7 +133,7 @@ app.post("/celebrate/:taskId", async (req, res) => {
     const update = await db.query(
       `UPDATE uncluttrtasks SET celebration_count = celebration_count + 1 WHERE id=$1 RETURNING *`[
         taskId
-      ]
+      ],
     );
     console.log(query.rows);
     res.status(200).json({ request: "success", tasks: update.rows[0] });
@@ -148,7 +148,7 @@ app.post("/celebrate/:taskId", async (req, res) => {
 app.get("/uncluttr-generator", async (req, res) => {
   try {
     const query = await db.query(
-      `SELECT * from uncluttrgenerator ORDER BY time_estimated ASC;`
+      `SELECT * from uncluttrgenerator ORDER BY time_estimated ASC;`,
     );
     console.log(query.rows);
     res.status(200).json({ request: "success", tasks: query.rows });
@@ -182,7 +182,7 @@ app.post("/uncluttr/complete/:taskId", async (req, res) => {
     const taskId = req.params.taskId;
     const query = await db.query(
       `UPDATE uncluttrtasks SET is_completed = TRUE, completed_at = NOW() WHERE id = $1 returning*;`,
-      [taskId]
+      [taskId],
     );
     console.log(query.rows);
     res.status(200).json({ request: "success", task: query.rows[0] });
@@ -192,14 +192,14 @@ app.post("/uncluttr/complete/:taskId", async (req, res) => {
   }
 });
 
-//STRETCH GOAL: Delete a task
+//==========================================STRETCH GOAL: Delete a task========================================================
 
 app.delete("/delete-uncluttr/:id", async (req, res) => {
   try {
     const idParams = req.params.id;
     const query = await db.query(
       `DELETE FROM uncluttrtasks WHERE id = $1 RETURNING*`,
-      [idParams]
+      [idParams],
     );
     res.status(200).json({ request: "success", deleted: query.rows[0] });
   } catch (error) {
@@ -207,3 +207,22 @@ app.delete("/delete-uncluttr/:id", async (req, res) => {
     res.status(500).json({ request: "fail" });
   }
 });
+
+//=========================================Adding a username submission form for the homepage=========================
+
+app.post("/new-user", async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    const query = await db.query(
+      `INSERT INTO uncluttrusers (username) VALUES ($1) RETURNING *;`,
+      [username],
+    );
+    res.status(200).json({ request: "success", user: query.rows[0] });
+  } catch (error) {
+    console.error(error, "Request failed. That user already exists");
+    res.status(500).json({ request: "fail" });
+  }
+});
+
+//received error with above. names were added despite them exisiting. after some research found out that the issue is within supabase the input needs to be amended to be unique, so that no 2 users can appear twice
