@@ -29,6 +29,8 @@
 
 //for later join generator with user database so their appear in dashboard and can be celebrated
 
+//issues that will take longer: timer set up, connecting to user and feed - not doable in time available
+
 export default function Generator() {
   return (
     <>

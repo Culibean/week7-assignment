@@ -5,10 +5,15 @@ import TaskForm from "./components/TaskForm";
 import SingleTask from "./components/SingleTask";
 import Feed from "./components/Feed";
 import Generator from "./components/Generator";
+import Header from "./components/Header";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
     <>
+      <Header />
+      <NavBar />
       <main>
         <Routes>
           <Route element={<Homepage />} path={"/"} />
@@ -19,6 +24,7 @@ export default function App() {
           <Route element={<Generator />} path={"/uncluttr-generator"} />
         </Routes>
       </main>
+      <Footer />
     </>
   );
 }

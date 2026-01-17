@@ -36,7 +36,7 @@ export default function Feed() {
             <h3>{task.task_text}</h3>
             <h4>Uncluttred by {task.username}</h4>
             <h4>Room: {task.room}</h4>
-            <h4> Likes: {task.celebration_count}</h4>
+            <h4> Celebrations: {task.celebration_count}🥳</h4>
 
             <button onClick={() => handleCelebration(task.id)}>
               Celebrate

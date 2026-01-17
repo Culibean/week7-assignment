@@ -100,10 +100,10 @@ app.post("/your-uncluttr/:taskId/complete", async (req, res) => {
     const taskId = req.params.taskId;
 
     const update = await db.query(
-      `UPDATE uncluttrtasks SET is_completed = TRUE, shared_to_community = TRUE, completed_at=NOW() WHERE id=1 RETURNING *;`,
+      `UPDATE uncluttrtasks SET is_completed = TRUE, shared_to_community = TRUE, completed_at=NOW() WHERE id=$1 RETURNING *;`,
       [taskId],
     );
-    console.log(query.rows);
+    console.log(update.rows);
     res.status(200).json({ request: "success", task: update.rows[0] });
   } catch (error) {
     console.error(error, "Request failed. You need to Uncluttr first");
@@ -131,11 +131,10 @@ app.post("/celebrate/:taskId", async (req, res) => {
     const taskId = req.params.taskId;
 
     const update = await db.query(
-      `UPDATE uncluttrtasks SET celebration_count = celebration_count + 1 WHERE id=$1 RETURNING *`[
-        taskId
-      ],
+      `UPDATE uncluttrtasks SET celebration_count = celebration_count + 1 WHERE id=$1 RETURNING *`,
+      [taskId],
     );
-    console.log(query.rows);
+    console.log(update.rows);
     res.status(200).json({ request: "success", tasks: update.rows[0] });
   } catch (error) {
     console.error(error, "Request failed. Uncluttr first, celebrate later");
