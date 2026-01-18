@@ -35,7 +35,7 @@ export default function Homepage() {
 
   return (
     <>
-      <div>
+      <div className="beginning">
         <h2>Welcome to Uncluttr</h2>
         <p className="Intro">
           Uncluttr is a minimalist decluttering app designed to make tidying

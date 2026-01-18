@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Header.css";
+import "./Feed.css";
 
 export default function Feed() {
   const [tasks, setTasks] = useState([]);
@@ -35,13 +35,18 @@ export default function Feed() {
 
         {tasks.length === 0 && <p>No completed tasks yet</p>}
         {tasks.map((task) => (
-          <div key={task.id}>
-            <h3>{task.task_text}</h3>
-            <h4>Uncluttred by {task.username}</h4>
-            <h4>Room: {task.room}</h4>
-            <h4> Celebrations: {task.celebration_count}🥳</h4>
+          <div key={task.id} className="feed_card">
+            <h3 className="task">{task.task_text}</h3>
+            <h4 className="user">Uncluttred by {task.username}</h4>
+            <h4 className="room">Room: {task.room}</h4>
+            <h4 className="celebration">
+              Celebrations: {task.celebration_count}🥳
+            </h4>
 
-            <button onClick={() => handleCelebration(task.id)}>
+            <button
+              className="celebrate"
+              onClick={() => handleCelebration(task.id)}
+            >
               Celebrate
             </button>
           </div>

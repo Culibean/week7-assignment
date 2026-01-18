@@ -76,10 +76,10 @@ export default function SingleTask() {
   }
 
   return (
-    <div>
+    <div className="timer_card">
       {done && <Confetti />}
       <h2>Your Uncluttr Challenge: </h2>
-      <h3>{task.task_text}</h3>
+      <h3 className="tasktext">{task.task_text}</h3>
 
       {!started && !done && (
         <button className="startbutton" onClick={handleStart}>
@@ -89,13 +89,17 @@ export default function SingleTask() {
 
       {started && !done && (
         <>
-          <h3>Time left: {changeTime(timeLeft)}</h3>
+          <h3 className="timer">Time left: {changeTime(timeLeft)}</h3>
           {timeUp && <p>Time's up! You have uncluttred!</p>}
-          {!timeUp && <button onClick={handleFinish}>Already done!</button>}
+          {!timeUp && (
+            <button className="startbutton" onClick={handleFinish}>
+              Already done!
+            </button>
+          )}
           {timeUp && <button onClick={handleFinish}>End Uncluttr</button>}
         </>
       )}
-      {done && <p>Super Uncluttr</p>}
+      {done && <p className="tasktext">Super Uncluttr</p>}
       <a
         className="returnbutton"
         href="https://uncluttr.onrender.com/dashboard"

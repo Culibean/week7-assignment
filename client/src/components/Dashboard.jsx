@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import "./Header.css";
+import "./Dashboard.css";
 
 //TODO: add field where users can add username for items to be displayed
 //amended to include a button which triggers fetch, so assume effect no longer needed, as doesn't need to happen on opening page
