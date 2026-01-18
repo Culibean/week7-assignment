@@ -64,3 +64,32 @@ label {
   font-weight: 600;
   color: rgb(150, 90, 200);
 }
+
+@media (max-width: 600px) {
+  .userform {
+    padding: 1rem;
+    max-width: 80%;
+  }
+
+  .userform label {
+    font-size: 0.8rem;
+  }
+
+  .userform input,
+  .userform select,
+  .userform textarea {
+    font-size: 1rem;
+  }
+
+  h2,
+  .beginning h3 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

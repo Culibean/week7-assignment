@@ -10,5 +10,17 @@ html {
 
 body {
   background: linear-gradient(90deg, rgb(255, 225, 235), rgb(245, 210, 255));
+  background-color: rgb(255, 225, 235);
   font-family: "DM Sans";
+}
+@media (max-width: 600px) {
+  body,
+  .header .tagline {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1rem;
+    text-align: center;
+  }
 }
