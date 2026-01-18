@@ -73,22 +73,24 @@ export default function Homepage() {
 
         <ul>
           <li>
-            Submit your own task (maybe something you have put off for ages),
-            schedule it or start right away. Need a surprise in your life? Use
-            our generator to randomly give you a short quick task (Coming soon!)
+            Add yourself to the database above. Then go to your dashboard, type
+            in your username and find a list of your open and completed tasks.
           </li>
           <li>
-            Once you started the task, it's down to you if you can beat the
-            timer. That's it! A mini mission, a quest or challenge. Whatever
-            drives you, but we know you can do it. Or can you?
+            Any open tasks? Click on them and start the time. Once you started
+            the task, it's down to you if you can beat the timer. That's it! A
+            mini mission, a quest or challenge. Whatever drives you, but we know
+            you can do it. Or can you?
           </li>
           <li>
-            Swoop in, clear a corner, rescue a surface, banish a dust bunny.
-            Whatever the task says.
+            Finished early or just on time? Celebrate with a bit of confetti
+            (don't worry, no need to clean it up after)! Your completed tasks
+            will appear in your dashboard and on the community feed.
           </li>
           <li>
-            Done? Then hit that button! Celebreate yourself, dance in that clean
-            kitchen! Or get a cuppa, we don't judge!
+            Didn't quite make it in time? No judgement here, just click End
+            Uncluttr once you are done. The task will be completed and no one
+            will know that you took a little longer.
           </li>
           <li>
             Want to show off? Your completed task appears in our community feed.
@@ -96,8 +98,8 @@ export default function Homepage() {
             something we celebrate here! 🥳
           </li>
           <li>
-            Can't get enough? Hop on your dashboard and see open and completed
-            tasks!
+            Got some time on your hands but no open tasks? The Generator (coming
+            soon!) can throw you a random task depending how much time you have.
           </li>
         </ul>
       </div>
