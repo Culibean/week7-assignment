@@ -47,7 +47,7 @@ export default function Homepage() {
 
         <div>
           <h2>
-            Enter your username to see of you're already part of Uncluttr.
+            Enter your username to see if you're already part of Uncluttr.
           </h2>
           <h3>
             If you're new here, you will be added to our database and can enjoy
