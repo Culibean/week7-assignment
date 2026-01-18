@@ -36,7 +36,7 @@ However, I really enjoy REACT. I feel much more comfortable building apps than I
 
 One thing that took longer was the timer set up in the Single Task form. It took me some time to read through how to create a countdown from the time in the database. I have seen that there are npm templates for these, so might in future use one of those. But I'm proud that I managed it.
 
-The reason I have been so focused to get this app running is also that this is osmething close to my heart, so having the basic funcionality is something that was important to me. I'm looking forward now to learn about Next.js and authenticator to build this out a litte more to make it usable in the real world.
+The reason I have been so focused to get this app running is also that this is something close to my heart, so having the basic funcionality is something that was important to me. I'm looking forward now to learn about Next.js and authenticator to build this out a litte more to make it usable in the real world.
 
 However I appreciate any feedback on usability or if there is anything I could improve.
 
