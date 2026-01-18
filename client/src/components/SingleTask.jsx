@@ -17,7 +17,7 @@ export default function SingleTask() {
   useEffect(() => {
     async function fetchTask() {
       const response = await fetch(
-        `http://localhost:8080/your-uncluttr/${taskId}`
+        `http://localhost:8080/your-uncluttr/${taskId}`,
       );
       const data = await response.json();
       setTask(data.task);
@@ -53,9 +53,12 @@ export default function SingleTask() {
 
   const handleFinish = () => {
     setDone(true);
-    fetch(`http://localhost:8080/your-uncluttr/${taskId}/complete`, {
-      method: "POST",
-    });
+    fetch(
+      `https://uncluttr-server.onrender.com/your-uncluttr/${taskId}/complete`,
+      {
+        method: "POST",
+      },
+    );
   };
 
   if (loading) return <p>Loading Uncluttr...</p>;

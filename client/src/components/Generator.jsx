@@ -9,7 +9,7 @@
 
 //   useEffect(() => {
 //     const fetchTasks = async () => {
-//       const response = await fetch("http://localhost:8080/uncluttr-generator");
+//       const response = await fetch("https://uncluttr-server.onrender.com/uncluttr-generator");
 //       const data = await response.json();
 
 //       if (data.request === "success") {

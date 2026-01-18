@@ -19,7 +19,7 @@ export default function Feed() {
   }, []);
 
   const handleCelebration = async (taskId) => {
-    await fetch(`http://localhost:8080/celebrate/${taskId}`, {
+    await fetch(`https://uncluttr-server.onrender.com/celebrate/${taskId}`, {
       method: "POST",
     });
     fetchTasks();

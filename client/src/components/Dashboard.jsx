@@ -11,7 +11,7 @@ export default function Dashboard() {
 
   async function getTasks(username) {
     const response = await fetch(
-      `http://localhost:8080/your-uncluttr/user/${username}`
+      `https://uncluttr-server.onrender.com/your-uncluttr/user/${username}`,
     );
     const data = await response.json();
 

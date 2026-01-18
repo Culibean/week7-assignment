@@ -11,11 +11,14 @@ export default function Homepage() {
     event.preventDefault();
     setError("");
 
-    const response = await fetch("http://localhost:8080/new-user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username }),
-    });
+    const response = await fetch(
+      "https://uncluttr-server.onrender.com/new-user",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username }),
+      },
+    );
 
     const data = await response.json();
 

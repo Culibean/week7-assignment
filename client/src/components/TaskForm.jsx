@@ -23,11 +23,14 @@ export default function TaskForm() {
       scheduled_day: scheduledDay,
     };
 
-    const response = await fetch("http://localhost:8080/new-uncluttr", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ formValues }),
-    });
+    const response = await fetch(
+      "https://uncluttr-server.onrender.com/new-uncluttr",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formValues }),
+      },
+    );
 
     const data = await response.json();
 
