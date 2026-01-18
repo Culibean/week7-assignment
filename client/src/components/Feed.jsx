@@ -4,7 +4,7 @@ export default function Feed() {
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = async () => {
-    const response = await fetch("http://localhost:8080/uncluttr-community");
+    const response = await fetch("https://uncluttr-server.onrender.com");
     const data = await response.json();
     setTasks(data.tasks);
   };
