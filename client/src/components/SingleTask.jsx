@@ -17,7 +17,7 @@ export default function SingleTask() {
   useEffect(() => {
     async function fetchTask() {
       const response = await fetch(
-        `http://localhost:8080/your-uncluttr/${taskId}`,
+        `https://uncluttr-server.onrender.com/your-uncluttr/${taskId}`,
       );
       const data = await response.json();
       setTask(data.task);
