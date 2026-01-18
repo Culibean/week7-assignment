@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Confetti from "react-confetti";
+import "./SingleTask.css";
 
 export default function SingleTask() {
   const { taskId } = useParams();
@@ -81,7 +82,9 @@ export default function SingleTask() {
       <h3>{task.task_text}</h3>
 
       {!started && !done && (
-        <button onClick={handleStart}>Start to Uncluttr</button>
+        <button className="startbutton" onClick={handleStart}>
+          Start to Uncluttr
+        </button>
       )}
 
       {started && !done && (
@@ -93,7 +96,10 @@ export default function SingleTask() {
         </>
       )}
       {done && <p>Super Uncluttr</p>}
-      <a className="button" href="/dashboard">
+      <a
+        className="returnbutton"
+        href="https://uncluttr.onrender.com/dashboard"
+      >
         Back to Dashboard
       </a>
     </div>

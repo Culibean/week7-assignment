@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Homepage.css";
 
 //TODO: create a simple form for users to add their username in the database
 
@@ -43,6 +44,31 @@ export default function Homepage() {
           progress, celebrate your wins, and get inspired by a community of
           people making small, meaningful changes in their homes and lives.
         </p>
+
+        <div>
+          <h2>
+            Enter your username to see of you're already part of Uncluttr.
+          </h2>
+          <h3>
+            If you're new here, you will be added to our database and can enjoy
+            Uncluttr for free!
+          </h3>
+
+          <form className="userform" onSubmit={handleSubmit}>
+            <label>
+              Username:
+              <input
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </label>
+            <button type="submit">Uncluttr</button>
+          </form>
+
+          {error && <p>{error}</p>}
+          {success && <p>{success}</p>}
+        </div>
         <h3>How it works</h3>
 
         <ul>
@@ -74,29 +100,6 @@ export default function Homepage() {
             tasks!
           </li>
         </ul>
-      </div>
-
-      <div>
-        <h2>Enter your username to see of you're already part of Uncluttr.</h2>
-        <h3>
-          If you're new here, you will be added to our database and can enjoy
-          Uncluttr for free!
-        </h3>
-
-        <form onSubmit={handleSubmit}>
-          <label>
-            Username:
-            <input
-              type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </label>
-          <button type="submit">Uncluttr</button>
-        </form>
-
-        {error && <p>{error}</p>}
-        {success && <p>{success}</p>}
       </div>
     </>
   );
